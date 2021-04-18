@@ -33,8 +33,6 @@ public class Avatar extends PApplet{
 		} else {
 			app.image(car1, posX, posY+80);
 		}
-		
-		move();
 	}
 	
 	

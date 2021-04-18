@@ -150,7 +150,6 @@ public class Screens {
 		Voz v = gson.fromJson(msg, Voz.class);
 		if (sessions.get(0).getID() == Id) {
 			sessions.get(0).getAv().setVel(v.getPercentage()/30);
-			//System.out.println(sessions.get(0).getAv().getPosX());
 		} else {
 			sessions.get(1).getAv().setVel(v.getPercentage());
 		}

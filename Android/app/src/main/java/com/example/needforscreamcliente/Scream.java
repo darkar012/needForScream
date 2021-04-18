@@ -18,6 +18,7 @@ public class Scream extends AppCompatActivity implements OnMessageListener{
     private int percentage;
     private ImageView guia;
 private TcpConnection tcp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
