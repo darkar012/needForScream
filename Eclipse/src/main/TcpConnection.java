@@ -32,6 +32,8 @@ public class TcpConnection extends Thread{
 
 	String recordatorio;
 	private OnMessageListener OML;
+    private BufferedWriter writer;
+    private Socket socketEnvio;
 	private ArrayList<Session> sessions;
 	private int conexiones = 0;
 
@@ -51,7 +53,6 @@ public class TcpConnection extends Thread{
 				System.out.println("esperando conexion");
 				Socket socket = server.accept();
 				
-				
 				Session session = new Session(socket);
 				session.setObserver(OML);
 				session.start();
@@ -61,6 +62,13 @@ public class TcpConnection extends Thread{
 				System.out.println("Cliente esta conectado");
 				conexiones ++;
 				
+				if (conexiones == 2) {
+					for (int i = 0; i < sessions.size(); i++) {
+						sessions.get(i).confirmarJuego("conectados");
+					}
+					
+				}
+				
 			}
 
 		} catch (IOException e) {
@@ -69,7 +77,8 @@ public class TcpConnection extends Thread{
 		}
 
 	}
-
+	
+	
 	public ArrayList<Session> getSessions() {
 		return sessions;
 

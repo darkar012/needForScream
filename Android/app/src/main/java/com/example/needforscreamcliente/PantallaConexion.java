@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class pantallaConexion extends AppCompatActivity implements OnMessageListener, View.OnClickListener {
+public class PantallaConexion extends AppCompatActivity implements OnMessageListener, View.OnClickListener {
     private ConstraintLayout fondo;
     private Button play2, back;
     private boolean conectado = false;
@@ -55,8 +55,12 @@ public class pantallaConexion extends AppCompatActivity implements OnMessageList
                                     counter = -1;
                                 }
                                 counter++;
-                                Log.e(">>>", "" + counter);
+                                //Log.e(">>>", "" + counter);
+if (conectado == true){
+    fondo.setBackgroundResource(R.drawable.conectado);
+    return;
 
+}
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -71,10 +75,10 @@ public class pantallaConexion extends AppCompatActivity implements OnMessageList
     public void OnMessage(String msg) {
         runOnUiThread(
                 ()->{
-                    if (msg.equals("conectado")) {
+                    if (msg.equals("conectados")) {
                         play2.setEnabled(true);
                         conectado = true;
-                        fondo.setBackgroundResource(R.drawable.conectado);
+
                     }
                 }
         );
@@ -85,7 +89,7 @@ public class pantallaConexion extends AppCompatActivity implements OnMessageList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playBtn2:
-                Intent i = new Intent(this, pantallaConexion.class);
+                Intent i = new Intent(this, Counter.class);
                 startActivity(i);
                 finish();
                 break;
