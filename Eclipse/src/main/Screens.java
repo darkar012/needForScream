@@ -6,17 +6,21 @@ import processing.core.PImage;
 public class Screens {
 
 	
-	private PImage inicioScr, instruccionesScr, conexionScr, juegoScr;
+	private PImage inicioScr, instruccionesScr, conexionScr, conexionScr2, conexionScr3, juegoScr;
 	private PImage p1estado, p2estado;
 	private PApplet app;
 	
 	private int numScreen=1;
+	private int conectados = 0;
 	
 	public Screens(PApplet app) {
 		this.app=app;
 		inicioScr = app.loadImage("../imagenes/inicio.png");
 		instruccionesScr = app.loadImage("../imagenes/instrucciones.png");
-		conexionScr = app.loadImage("../imagenes/conexion.png");
+		conexionScr = app.loadImage("../imagenes/conexion1.png");
+		conexionScr2 = app.loadImage("../imagenes/conexion2.png");
+		conexionScr3 = app.loadImage("../imagenes/conexionReady.png");
+		
 		juegoScr = app.loadImage("../imagenes/juego.png");
 		
 	}
@@ -38,7 +42,15 @@ public class Screens {
 
 		case 3:
 			
-			app.image(conexionScr, 0, 0);
+			
+			
+			if (conectados == 0) {
+				app.image(conexionScr, 0, 0);
+			} else if (conectados == 1) {
+				app.image(conexionScr2, 0, 0);
+			} else {
+				app.image(conexionScr3, 0, 0);
+			}
 			
 			break;
 			
@@ -54,6 +66,14 @@ public class Screens {
 		
 	}
 	
+	public int getConectados() {
+		return conectados;
+	}
+
+	public void setConectados(int conectados) {
+		this.conectados = conectados;
+	}
+
 	public void buttons() {
 		
 		switch (numScreen) {
@@ -86,6 +106,11 @@ public class Screens {
 		default:
 			break;
 		}
+		
+	}
+
+	public void OnMessage(Session s, String msg) {
+		// TODO Auto-generated method stub
 		
 	}
 }

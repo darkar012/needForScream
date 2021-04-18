@@ -31,7 +31,7 @@ public class TcpConnection extends Thread {
 
     public void run() {
         try {
-            socket = new Socket("10.0.2.2", 5000);
+            socket = new Socket("192.168.1.52", 5000);
 observer.OnMessage("conectado");
             OutputStream os = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os);

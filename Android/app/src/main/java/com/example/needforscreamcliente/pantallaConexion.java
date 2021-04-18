@@ -69,11 +69,16 @@ public class pantallaConexion extends AppCompatActivity implements OnMessageList
 
     @Override
     public void OnMessage(String msg) {
-        if (msg.equals("conectado")) {
-            play2.setEnabled(true);
-            conectado = true;
-            fondo.setBackgroundResource(R.drawable.conectado);
-        }
+        runOnUiThread(
+                ()->{
+                    if (msg.equals("conectado")) {
+                        play2.setEnabled(true);
+                        conectado = true;
+                        fondo.setBackgroundResource(R.drawable.conectado);
+                    }
+                }
+        );
+
     }
 
     @Override

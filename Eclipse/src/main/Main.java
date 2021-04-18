@@ -28,14 +28,19 @@ public class Main extends PApplet implements OnMessageListener{
 
 	public void draw () {
 		background(255);
-		
+		connect();
 		gameScreen.paintScreen();
 	}
 
 	@Override
 	public void OnMessage(Session s, String msg) {
 		// TODO Auto-generated method stub
-
+gameScreen.OnMessage(s, msg);
+	}
+	
+	public void connect() {
+		int conexiones = tcp.getConexiones();
+		gameScreen.setConectados(conexiones);
 	}
 	
 	public void setImage(String url) {

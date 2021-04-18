@@ -33,6 +33,7 @@ public class TcpConnection extends Thread{
 	String recordatorio;
 	private OnMessageListener OML;
 	private ArrayList<Session> sessions;
+	private int conexiones = 0;
 
 	public void setObserver(OnMessageListener observer){
 		this.OML = observer;
@@ -49,6 +50,8 @@ public class TcpConnection extends Thread{
 			while (true) {
 				System.out.println("esperando conexion");
 				Socket socket = server.accept();
+				
+				
 				Session session = new Session(socket);
 				session.setObserver(OML);
 				session.start();
@@ -56,6 +59,8 @@ public class TcpConnection extends Thread{
 				sessions.add(session);
 
 				System.out.println("Cliente esta conectado");
+				conexiones ++;
+				
 			}
 
 		} catch (IOException e) {
@@ -69,4 +74,14 @@ public class TcpConnection extends Thread{
 		return sessions;
 
 	}
+
+	public int getConexiones() {
+		return conexiones;
+	}
+
+	public void setConexiones(int conexiones) {
+		this.conexiones = conexiones;
+	}
+	
+	
 }
