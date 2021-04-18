@@ -51,7 +51,7 @@ gameScreen.OnMessage(s, msg);
 
 	public void mousePressed() {
 
-		System.out.println("Mouse X= "+mouseX+" - Mouse Y= "+mouseY);
+		//System.out.println("Mouse X= "+mouseX+" - Mouse Y= "+mouseY);
 		
 		gameScreen.buttons();
 		

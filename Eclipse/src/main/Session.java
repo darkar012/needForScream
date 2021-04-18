@@ -2,6 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -34,14 +35,12 @@ public class Session extends Thread{
 	public void run() {
 		try {
 
-			InetAddress i = socket.getInetAddress();
+			/*InetAddress i = socket.getInetAddress();
 			String ip = i.toString();
-			System.out.println(ip);
+			String ipfinal = ip.replace("/", "");*/
 			
 			InputStream is = socket.getInputStream();
-			OutputStream os = socket.getOutputStream();
-
-			writer = new BufferedWriter(new OutputStreamWriter(os));
+			
 
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader breader = new BufferedReader(isr);
@@ -66,5 +65,23 @@ public class Session extends Thread{
 
 	public String getID() {
 		return this.id;
+	}
+
+
+
+	public void confirmarJuego(String msg) {
+		 new Thread(
+	                () -> {
+	                    try {
+	                    	OutputStream os = socket.getOutputStream();
+	            			writer = new BufferedWriter(new OutputStreamWriter(os));
+	                        writer.write(msg + "\n");
+	                        writer.flush();
+	                    } catch (IOException e) {
+	                        e.printStackTrace();
+	                    }
+	                }
+	        ).start();
+		
 	}
 }

@@ -1,7 +1,12 @@
 package com.example.needforscreamcliente;
 
+import android.util.Log;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -31,13 +36,24 @@ public class TcpConnection extends Thread {
 
     public void run() {
         try {
-            socket = new Socket("192.168.1.52", 5000);
-observer.OnMessage("conectado");
+
+            socket = new Socket("10.0.2.2", 5000);
+
+//observer.OnMessage("conectado");
             OutputStream os = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os);
             writer = new BufferedWriter(osw);
+            InputStream is = socket.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader breader = new BufferedReader(isr);
 
+            while (true) {
 
+                String mensajeRecibido = breader.readLine();
+                Log.e(">>>", mensajeRecibido);
+                observer.OnMessage(mensajeRecibido);
+
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
