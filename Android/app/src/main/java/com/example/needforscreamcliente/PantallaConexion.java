@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class pantallaConexion extends AppCompatActivity implements OnMessageListener, View.OnClickListener {
+public class PantallaConexion extends AppCompatActivity implements OnMessageListener, View.OnClickListener {
     private ConstraintLayout fondo;
     private Button play2, back;
     private boolean conectado = false;
@@ -89,7 +89,7 @@ if (conectado == true){
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playBtn2:
-                Intent i = new Intent(this, counter.class);
+                Intent i = new Intent(this, Counter.class);
                 startActivity(i);
                 finish();
                 break;

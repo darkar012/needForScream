@@ -17,11 +17,12 @@ import processing.core.PApplet;
 
 public class Session extends Thread{
 
-	
+	private PApplet app;
 	private String id;
 	private Socket socket;
 	private BufferedWriter writer;
 	private OnMessageListener OML;
+	private Avatar av;
 	//private PApplet app;
 
 	public Session (Socket socket) {
@@ -32,12 +33,20 @@ public class Session extends Thread{
 
 
 
+	public Avatar getAv() {
+		return av;
+	}
+
+
+
+	public void setAv(Avatar av) {
+		this.av = av;
+	}
+
+
+
 	public void run() {
 		try {
-
-			/*InetAddress i = socket.getInetAddress();
-			String ip = i.toString();
-			String ipfinal = ip.replace("/", "");*/
 			
 			InputStream is = socket.getInputStream();
 			
@@ -69,6 +78,20 @@ public class Session extends Thread{
 
 
 
+	public PApplet getApp() {
+		return app;
+	}
+
+
+
+	public void setApp(PApplet app) {
+		this.app = app;
+	}
+	
+	
+
+
+
 	public void confirmarJuego(String msg) {
 		 new Thread(
 	                () -> {
@@ -83,5 +106,11 @@ public class Session extends Thread{
 	                }
 	        ).start();
 		
+	}
+
+
+
+	public void createAvatar(boolean b) {
+		av = new Avatar(10, 550, 0, b, app);
 	}
 }

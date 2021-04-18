@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -13,6 +15,8 @@ public class Screens {
 	private int numScreen=1;
 	private int conectados = 0;
 	
+	private ArrayList<Session> sessions;
+	
 	public Screens(PApplet app) {
 		this.app=app;
 		inicioScr = app.loadImage("../imagenes/inicio.png");
@@ -22,9 +26,17 @@ public class Screens {
 		conexionScr3 = app.loadImage("../imagenes/conexionReady.png");
 		
 		juegoScr = app.loadImage("../imagenes/juego.png");
-		
+		sessions = new ArrayList<Session>();
 	}
 	
+	public ArrayList<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(ArrayList<Session> sessions) {
+		this.sessions = sessions;
+	}
+
 	public void paintScreen() {
 		
 		switch (numScreen) {
@@ -41,8 +53,7 @@ public class Screens {
 			break;
 
 		case 3:
-			
-			
+	
 			
 			if (conectados == 0) {
 				app.image(conexionScr, 0, 0);
@@ -50,6 +61,23 @@ public class Screens {
 				app.image(conexionScr2, 0, 0);
 			} else {
 				app.image(conexionScr3, 0, 0);
+				
+				new Thread(
+						
+						()->{
+							try {
+								Thread.sleep(500);
+								numScreen = 4;
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							return;
+							
+						}
+						
+						).start();
+			
 			}
 			
 			break;
@@ -57,6 +85,11 @@ public class Screens {
 		case 4:
 			
 			app.image(juegoScr, 0, 0);
+			
+			for (int i = 0; i < sessions.size(); i++) {
+				System.out.println("pintando");
+				sessions.get(i).getAv().pintar();
+			}
 			
 			break; 
 			

@@ -7,9 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-public class counter extends AppCompatActivity {
+public class Counter extends AppCompatActivity {
     private ConstraintLayout fondo;
     private int counter = 0;
+    private boolean grita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +26,14 @@ public class counter extends AppCompatActivity {
     public void loop() {
         new Thread(
                 () -> {
-                    while (true) {
-                        for (int i = 0; i < 20; i++) {
+                    grita = false;
+                    while (!grita) {
+                        for (int i = 0; i < 5; i++) {
 
                             try {
-                                Thread.sleep(700);
 
+                                Thread.sleep(700);
+                                Log.e("<<<", "grita= "+grita);
                                 Log.e(">>>", "" + counter);
                                 if (counter == 0) {
                                     fondo.setBackgroundResource(R.drawable.cuenta1);
@@ -41,11 +44,12 @@ public class counter extends AppCompatActivity {
                                     fondo.setBackgroundResource((R.drawable.cuenta3));
                                 } else {
                                     fondo.setBackgroundResource((R.drawable.scream));
-                                    counter = -1;
-                                    Thread.sleep(700);
-                                    Intent j = new Intent(this, scream.class);
-                                    startActivity(j);
+                                    grita = true;
+
                                 }
+
+
+
 
                                 counter++;
 
@@ -55,9 +59,16 @@ public class counter extends AppCompatActivity {
                         }
 
                     }
+                    if (grita){
+                        Intent j = new Intent(this, Scream.class);
+                        startActivity(j);
+                        finish();
+                        return;
+                    }
+
                 }
 
         ).start();
 
-}
+    }
 }

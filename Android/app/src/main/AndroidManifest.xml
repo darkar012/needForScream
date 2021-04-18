@@ -3,6 +3,7 @@
     package="com.example.needforscreamcliente">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NeedForScreamCliente">
-        <activity android:name=".scream"></activity>
+        <activity android:name=".Scream"></activity>
         <activity android:name=".counter" />
-        <activity android:name=".pantallaConexion" />
+        <activity android:name=".PantallaConexion" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
