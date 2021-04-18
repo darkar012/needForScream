@@ -44,7 +44,6 @@ import processing.core.PImage;
 
 		public void setImage(String url) {
 			img = loadImage(url);
-			image
 		}
 
 	}
