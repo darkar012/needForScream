@@ -44,7 +44,6 @@ System.out.println("mouseY: "+ mouseY);
 		// TODO Auto-generated method stub
 
 	}
-
 	public void setImage(String url) {
 		img = loadImage(url);
 		img.resize(1200,700);
@@ -62,6 +61,7 @@ System.out.println("mouseY: "+ mouseY);
 			break;
 		case 2:
 			break;
+
 		}
 
 	}
