@@ -33,9 +33,21 @@ public class Avatar extends PApplet{
 		} else {
 			app.image(car1, posX, posY+80);
 		}
+		
+		move();
 	}
 	
 	
+	
+	public void move() {
+		
+		if(posX > 0 && posX+210 < 1200) {
+			posX = posX+vel;
+			System.out.println(posX);
+		}
+		
+	}
+
 	public int getPosX() {
 		return posX;
 	}

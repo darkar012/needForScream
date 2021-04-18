@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeedForScreamCliente">
         <activity android:name=".Scream"></activity>
-        <activity android:name=".counter" />
+        <activity android:name=".Counter" />
         <activity android:name=".PantallaConexion" />
         <activity android:name=".MainActivity">
             <intent-filter>

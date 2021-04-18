@@ -12,7 +12,8 @@ public class Main extends PApplet implements OnMessageListener{
 	private int screen = 1;
 	private Screens gameScreen;
 	private PApplet app;
-
+private boolean todosConectados = true;
+	
 	public static void main(String[] args) {
 		PApplet.main("main.Main");
 	}
@@ -33,13 +34,17 @@ public class Main extends PApplet implements OnMessageListener{
 
 	public void draw () {
 		background(255);
-		connect();
+		if (todosConectados) {
+			connect();
+		}
+		
 		gameScreen.paintScreen();
 	}
 
 	@Override
 	public void OnMessage(Session s, String msg) {
-		// TODO Auto-generated method stub
+		System.out.println("mensaje recibido de " + s.getID() + ": "+ msg);
+		
 gameScreen.OnMessage(s, msg);
 	}
 	
@@ -54,6 +59,9 @@ gameScreen.OnMessage(s, msg);
 		} else {
 			tcp.getSessions().get(i).createAvatar(false);
 			}
+		}
+		if (conexiones >= 2) {
+			todosConectados = false;
 		}
 	}
 	

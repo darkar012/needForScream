@@ -58,6 +58,7 @@ public class Session extends Thread{
 
 				System.out.println("Esperando mensaje...");
 				String mensajeRecibido = breader.readLine(); 
+				System.out.println(mensajeRecibido);
 				OML.OnMessage(this, mensajeRecibido);
 				
 			}
@@ -87,10 +88,6 @@ public class Session extends Thread{
 	public void setApp(PApplet app) {
 		this.app = app;
 	}
-	
-	
-
-
 
 	public void confirmarJuego(String msg) {
 		 new Thread(
