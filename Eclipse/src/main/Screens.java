@@ -152,7 +152,7 @@ public class Screens {
 			sessions.get(0).getAv().setVel(v.getPercentage()/30);
 			//System.out.println(sessions.get(0).getAv().getPosX());
 		} else {
-			sessions.get(1).getAv().setVel(v.getPercentage());
+			sessions.get(1).getAv().setVel(v.getPercentage()/30);
 		}
 
 	}
