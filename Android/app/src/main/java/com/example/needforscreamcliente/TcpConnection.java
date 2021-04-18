@@ -39,7 +39,7 @@ public class TcpConnection extends Thread {
 
             socket = new Socket("10.0.2.2", 5000);
 
-//observer.OnMessage("conectado");
+
             OutputStream os = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os);
             writer = new BufferedWriter(osw);
