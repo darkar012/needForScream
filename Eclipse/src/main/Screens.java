@@ -22,6 +22,9 @@ public class Screens {
 	
 	private boolean hayGanador=false;
 	private int jgGanador=0;
+	
+	private int seg=0;
+	private boolean timer=false;
 
 	private ArrayList<Session> sessions;
 
@@ -132,26 +135,19 @@ public class Screens {
 
 		case 4:
 
+			timer=true;
 			app.image(juegoScr, 0, 0);
 
 			ganar();
-
-			
-			app.text("waiting 2nd player", 1000/2, 700/2);
-
+			temporizador();
+			pintarGanador();
 
 			for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).getAv().pintar();
 				sessions.get(i).getAv().move();
-			}
+			}		
 			
-			if (jgGanador==1) {
-				app.image(jugador1win, 118, 76);
-			}
 			
-			if(jgGanador==2) {
-				app.image(jugador2win, 118, 76);
-			}
 
 			break; 
 
@@ -159,6 +155,36 @@ public class Screens {
 			break;
 		}
 
+	}
+	
+	public void pintarGanador() {
+	
+		if (jgGanador==1) {
+			app.image(jugador1win, 118, 76);
+			app.text(seg, 886, 350);
+			timer=false;
+		}
+		
+		if(jgGanador==2) {
+			app.image(jugador2win, 118, 76);
+			app.text(seg, 886, 350);
+			timer=false;
+		}
+		
+	}
+	
+	public void temporizador() {
+		
+		app.text("TIME: ",550,36);
+		app.text(seg,550+150,36);
+		
+		if (timer) {
+			
+			if (app.frameCount % 60 == 0) {
+				seg += 1;
+			}
+			
+		}
 	}
 
 	public int getConectados() {
@@ -210,7 +236,7 @@ public class Screens {
 		Voz v = gson.fromJson(msg, Voz.class);
 		if (sessions.get(0).getID() == Id) {
 			sessions.get(0).getAv().setVel(v.getPercentage()/30);
-			System.out.println(sessions.get(0).getAv().getPosX());
+			//System.out.println(sessions.get(0).getAv().getPosX());
 		} else {
 			sessions.get(1).getAv().setVel(v.getPercentage()/30);
 		}
