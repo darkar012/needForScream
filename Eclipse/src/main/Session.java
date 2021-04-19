@@ -56,9 +56,9 @@ public class Session extends Thread{
 
 			while (true) {
 
-				System.out.println("Esperando mensaje...");
+				//System.out.println("Esperando mensaje...");
 				String mensajeRecibido = breader.readLine(); 
-				System.out.println(mensajeRecibido);
+				//System.out.println(mensajeRecibido);
 				OML.OnMessage(this, mensajeRecibido);
 				
 			}

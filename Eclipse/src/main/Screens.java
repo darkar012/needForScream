@@ -11,11 +11,14 @@ public class Screens {
 
 
 	private PImage inicioScr, instruccionesScr, conexionScr, conexionScr2, conexionScr3, juegoScr;
-	private PImage p1estado, p2estado;
+	private PImage p1estado, p2estado, jugador1win, jugador2win;
 	private PApplet app;
 
 	private int numScreen=1;
 	private int conectados = 0;
+	
+	private boolean hayGanador=false;
+	private int jgGanador=0;
 
 	private ArrayList<Session> sessions;
 
@@ -26,9 +29,43 @@ public class Screens {
 		conexionScr = app.loadImage("../imagenes/conexion1.png");
 		conexionScr2 = app.loadImage("../imagenes/conexion2.png");
 		conexionScr3 = app.loadImage("../imagenes/conexionReady.png");
+		jugador1win = app.loadImage("../imagenes/jugador1win.png");
+		jugador2win = app.loadImage("../imagenes/jugador2win.png");
 
 		juegoScr = app.loadImage("../imagenes/juego.png");
 		sessions = new ArrayList<Session>();
+		
+		
+	}
+	
+	public void ganar() {
+		
+		for (int i = 0; i < sessions.size(); i++) {
+			
+			int posX=sessions.get(i).getAv().getPosX();
+			
+			if (hayGanador==false) {
+				
+				if (posX>=990) {
+					
+					
+					
+					if (sessions.get(0).getID() == sessions.get(i).getID()) {
+						
+						jgGanador=1;
+					} else {
+						
+						jgGanador=2;
+					}
+					
+					hayGanador=true;
+					
+				}
+				
+			}
+			
+		}
+		
 	}
 
 	public ArrayList<Session> getSessions() {
@@ -87,10 +124,19 @@ public class Screens {
 		case 4:
 
 			app.image(juegoScr, 0, 0);
+			ganar();
 
 			for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).getAv().pintar();
 				sessions.get(i).getAv().move();
+			}
+			
+			if (jgGanador==1) {
+				app.image(jugador1win, 118, 76);
+			}
+			
+			if(jgGanador==2) {
+				app.image(jugador2win, 118, 76);
 			}
 
 			break; 
@@ -150,6 +196,7 @@ public class Screens {
 		Voz v = gson.fromJson(msg, Voz.class);
 		if (sessions.get(0).getID() == Id) {
 			sessions.get(0).getAv().setVel(v.getPercentage()/30);
+			System.out.println(sessions.get(0).getAv().getPosX());
 		} else {
 			sessions.get(1).getAv().setVel(v.getPercentage()/30);
 		}
