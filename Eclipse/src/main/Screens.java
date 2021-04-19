@@ -26,9 +26,6 @@ public class Screens {
 
 	private int seg=0;
 	private boolean timer=false;
-
-	private boolean iniciado = false;
-
 	private ArrayList<Session> sessions;
 
 	public Screens(PApplet app) {
