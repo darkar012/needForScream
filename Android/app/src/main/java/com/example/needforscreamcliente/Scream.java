@@ -28,7 +28,7 @@ private TcpConnection tcp;
                         ActivityCompat.requestPermissions(this, new String[]{
                                 Manifest.permission.RECORD_AUDIO
                         }, 11);
-                    
+
 
 
         guia = findViewById(R.id.guia);
