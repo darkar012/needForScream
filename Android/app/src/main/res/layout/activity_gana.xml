@@ -2,10 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/exitLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Win"
-    android:background="@drawable/gana">
+    android:background="@drawable/gana"
+    tools:context=".Win">
+
+    <Button
+        android:id="@+id/playBtn3"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/button"
+        android:text="Play again"
+        app:layout_constraintEnd_toStartOf="@+id/exitBtn2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vel" />
+
+    <Button
+        android:id="@+id/exitBtn2"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="@+id/playBtn3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/playBtn3"
+        app:layout_constraintTop_toTopOf="@+id/playBtn3" />
 
     <TextView
         android:id="@+id/tiempo"
