@@ -321,7 +321,7 @@ public class Screens {
 				
 				vel=0;
 				vel2=0;
-				velActivo=false;
+				velActivo=true;
 			}
 			break;	
 		}
