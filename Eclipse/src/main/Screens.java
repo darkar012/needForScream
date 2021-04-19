@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
+
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -19,7 +20,7 @@ public class Screens {
 
 	private int numScreen=1;
 	private int conectados = 0;
-	
+
 	private boolean hayGanador=false;
 	private int jgGanador=0;
 
@@ -36,45 +37,45 @@ public class Screens {
 		jugador1win = app.loadImage("../imagenes/jugador1win.png");
 		jugador2win = app.loadImage("../imagenes/jugador2win.png");
 
-		
+
 		font = app.createFont("NFS font", 32);
 		app.textFont (font);
 
 
 		juegoScr = app.loadImage("../imagenes/juego.png");
 		sessions = new ArrayList<Session>();
-		
-		
+
+
 	}
-	
+
 	public void ganar() {
-		
+
 		for (int i = 0; i < sessions.size(); i++) {
-			
+
 			int posX=sessions.get(i).getAv().getPosX();
-			
+
 			if (hayGanador==false) {
-				
+
 				if (posX>=990) {
-					
-					
-					
+
+
+
 					if (sessions.get(0).getID() == sessions.get(i).getID()) {
-						
+
 						jgGanador=1;
 					} else {
-						
+
 						jgGanador=2;
 					}
-					
+
 					hayGanador=true;
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
 	}
 
 	public ArrayList<Session> getSessions() {
@@ -136,19 +137,15 @@ public class Screens {
 
 			ganar();
 
-			
-			app.text("waiting 2nd player", 1000/2, 700/2);
-
-
 			for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).getAv().pintar();
 				sessions.get(i).getAv().move();
 			}
-			
+
 			if (jgGanador==1) {
 				app.image(jugador1win, 118, 76);
 			}
-			
+
 			if(jgGanador==2) {
 				app.image(jugador2win, 118, 76);
 			}
@@ -207,13 +204,34 @@ public class Screens {
 	public void OnMessage(Session s, String msg) {
 		Gson gson = new Gson();
 		String Id = s.getID();
-		Voz v = gson.fromJson(msg, Voz.class);
-		if (sessions.get(0).getID() == Id) {
-			sessions.get(0).getAv().setVel(v.getPercentage()/30);
-			System.out.println(sessions.get(0).getAv().getPosX());
-		} else {
-			sessions.get(1).getAv().setVel(v.getPercentage()/30);
+		Generic generic = gson.fromJson(msg, Generic.class);
+		
+		
+		switch (generic.type) {
+
+		case "voz": 
+			System.out.println("entro");
+			Voz v = gson.fromJson(msg, Voz.class);
+			if (sessions.get(0).getID() == Id) {
+				sessions.get(0).getAv().setVel(v.getPercentage()/30);
+				//System.out.println(sessions.get(0).getAv().getPosX());
+			} else {
+				sessions.get(1).getAv().setVel(v.getPercentage()/30);
+			}
+			break;	
+
+		case "message": 
+			Message m = gson.fromJson(msg, Message.class);
+			
+			if (m.getMsg().equals("iniciar")) {
+				for (int i = 0; i < sessions.size(); i++) {
+					sessions.get(i).confirmarJuego("iniciar");
+				}
+			}
+			break;	
+			
 		}
+
 
 	}
 }

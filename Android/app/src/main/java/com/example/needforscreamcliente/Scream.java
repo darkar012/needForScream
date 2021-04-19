@@ -24,9 +24,12 @@ private TcpConnection tcp;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scream);
 
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.RECORD_AUDIO
-        }, 11);
+
+                        ActivityCompat.requestPermissions(this, new String[]{
+                                Manifest.permission.RECORD_AUDIO
+                        }, 11);
+                    
+
 
         guia = findViewById(R.id.guia);
 

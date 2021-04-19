@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 public class PantallaConexion extends AppCompatActivity implements OnMessageListener, View.OnClickListener {
     private ConstraintLayout fondo;
     private Button play2, back;
@@ -80,6 +82,11 @@ if (conectado == true){
                         conectado = true;
 
                     }
+                    if (msg.equals("iniciar")) {
+                        Intent i = new Intent(this, Counter.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
         );
 
@@ -89,6 +96,11 @@ if (conectado == true){
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playBtn2:
+                Message m = new Message("iniciar");
+                Gson gson = new Gson();
+                String str = gson.toJson(m);
+                tcp.enviar(str);
+
                 Intent i = new Intent(this, Counter.class);
                 startActivity(i);
                 finish();
