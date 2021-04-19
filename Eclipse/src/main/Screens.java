@@ -46,7 +46,7 @@ public class Screens {
 		jugador2win = app.loadImage("../imagenes/jugador2win.png");
 
 
-		font = app.createFont("NFS font", 32);
+		font = app.createFont("../data/NFS.ttf", 28);
 		app.textFont (font);
 
 
