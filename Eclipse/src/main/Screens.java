@@ -27,10 +27,13 @@ public class Screens {
 	private int seg=0;
 	private boolean timer=false;
 
+	private boolean iniciado = false;
+
 	private ArrayList<Session> sessions;
 
 	public Screens(PApplet app) {
 		this.app=app;
+
 		inicioScr = app.loadImage("../imagenes/inicio.png");
 		instruccionesScr = app.loadImage("../imagenes/instrucciones.png");
 		conexionScr = app.loadImage("../imagenes/conexion1.png");
@@ -113,43 +116,24 @@ public class Screens {
 				app.image(conexionScr2, 0, 0);
 			} else {
 				app.image(conexionScr3, 0, 0);
-
-				new Thread(
-
-						()->{
-							try {
-								Thread.sleep(500);
-								numScreen = 4;
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							return;
-
-						}
-
-						).start();
-
 			}
 
 			break;
 
 		case 4:
+		
+				
+				app.image(juegoScr, 0, 0);
+				temporizador();
+				for (int i = 0; i < sessions.size(); i++) {
+					sessions.get(i).getAv().pintar();
+					sessions.get(i).getAv().move();
+				}
+			
 
-			timer=true;
-			app.image(juegoScr, 0, 0);
 
 			ganar();
-
-			temporizador();
 			pintarGanador();
-
-
-			for (int i = 0; i < sessions.size(); i++) {
-				sessions.get(i).getAv().pintar();
-				sessions.get(i).getAv().move();
-			}
-
 			break; 
 
 		default:
@@ -165,13 +149,13 @@ public class Screens {
 
 		if (jgGanador==1) {
 			app.image(jugador1win, 118, 76);
-			app.text(seg, 886, 350);
+			app.text(seg, 880, 350);
 			timer=false;
 		}
 
 		if(jgGanador==2) {
 			app.image(jugador2win, 118, 76);
-			app.text(seg, 886, 350);
+			app.text(seg, 880, 350);
 			timer=false;
 		}
 
@@ -260,6 +244,8 @@ public class Screens {
 			if (m.getMsg().equals("iniciar")) {
 				for (int i = 0; i < sessions.size(); i++) {
 					sessions.get(i).confirmarJuego("iniciar");
+					numScreen = 4;
+					timer = true;
 				}
 			}
 			break;	
