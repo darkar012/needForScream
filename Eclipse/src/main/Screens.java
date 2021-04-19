@@ -69,9 +69,12 @@ public class Screens {
 					if (sessions.get(0).getID() == sessions.get(i).getID()) {
 
 						jgGanador=1;
+						sessions.get(i).confirmarJuego("gano");
+						
 					} else {
 
 						jgGanador=2;
+						sessions.get(i).confirmarJuego("gano");
 					}
 
 					hayGanador=true;
@@ -173,7 +176,7 @@ public class Screens {
 	public void pintarGanador() {
 System.out.println(jgGanador);
 		if (jgGanador==1) {
-			sessions.get(0).confirmarJuego("gano");
+			
 			sessions.get(1).confirmarJuego("perdio");
 			app.image(jugador1win, 118, 76);
 			app.text(seg, 860, 350);
@@ -188,7 +191,7 @@ System.out.println(jgGanador);
 
 		if(jgGanador==2) {
 			sessions.get(0).confirmarJuego("perdio");
-			sessions.get(1).confirmarJuego("gano");
+			
 			
 			app.image(jugador2win, 118, 76);
 			app.text(seg, 870, 350);
@@ -318,7 +321,16 @@ System.out.println(jgGanador);
 				
 				vel=0;
 				vel2=0;
-				velActivo=false;
+				velActivo=true;
+			}
+			
+			if (m.getMsg().equals("finalizar")) {
+				
+				for (int i = 0; i < sessions.size(); i++) {
+					sessions.get(i).confirmarJuego("finalizar");
+					}
+				app.exit();
+				
 			}
 			break;	
 		}
