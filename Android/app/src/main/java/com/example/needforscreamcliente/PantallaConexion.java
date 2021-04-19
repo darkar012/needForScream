@@ -58,7 +58,7 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
                                 }
                                 counter++;
                                 //Log.e(">>>", "" + counter);
-if (conectado == true){
+    if (conectado == true){
     fondo.setBackgroundResource(R.drawable.conectado);
     return;
 
