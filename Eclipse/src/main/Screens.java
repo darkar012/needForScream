@@ -158,7 +158,7 @@ public class Screens {
 		if (sessions.get(0).getID() == Id) {
 			sessions.get(0).getAv().setVel(v.getPercentage()/30);
 		} else {
-			sessions.get(1).getAv().setVel(v.getPercentage());
+			sessions.get(1).getAv().setVel(v.getPercentage()/30);
 		}
 
 	}
