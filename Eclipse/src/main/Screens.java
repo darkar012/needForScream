@@ -295,6 +295,24 @@ System.out.println(jgGanador);
 					velActivo=true;
 				}
 			}
+			
+			if (m.getMsg().equals("reiniciar")) {
+				numScreen = 4;
+				hayGanador =false;
+				jgGanador=0;
+				
+				for (int i = 0; i < sessions.size(); i++) {
+					sessions.get(i).getAv().setVel(0);
+					sessions.get(i).getAv().setPosX(10);
+				}
+
+				seg=0;
+				timer=false;
+				
+				vel=0;
+				vel2=0;
+				velActivo=false;
+			}
 			break;	
 		}
 	}

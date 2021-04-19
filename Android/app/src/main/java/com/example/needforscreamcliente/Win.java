@@ -14,6 +14,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
     private Button playBtn, exitBtn;
     private ConstraintLayout exitLayout;
+    private boolean perdio;
     private TcpConnection tcp;
 
     @Override
@@ -27,6 +28,12 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
         tcp = TcpConnection.getInstance();
         tcp.setObserver(this);
+
+        perdio= getIntent().getBooleanExtra("perdio",true);
+
+        if (!perdio){
+            exitLayout.setBackgroundResource(R.drawable.pierde);
+        }
 
         playBtn.setOnClickListener(this);
         exitBtn.setOnClickListener(this);
@@ -47,6 +54,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
                 startActivity(i);
                 finish();
                 break;
+
             case R.id.exitBtn2:
                 finish();
                 break;

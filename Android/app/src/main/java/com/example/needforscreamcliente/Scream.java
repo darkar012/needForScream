@@ -13,12 +13,12 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 
-public class Scream extends AppCompatActivity implements OnMessageListener{
+public class Scream extends AppCompatActivity implements OnMessageListener {
     private SoundMeter meter;
     private boolean recording = false;
     private int percentage;
     private ImageView guia;
-private TcpConnection tcp;
+    private TcpConnection tcp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,9 @@ private TcpConnection tcp;
         setContentView(R.layout.activity_scream);
 
 
-                        ActivityCompat.requestPermissions(this, new String[]{
-                                Manifest.permission.RECORD_AUDIO
-                        }, 11);
-
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.RECORD_AUDIO
+        }, 11);
 
 
         guia = findViewById(R.id.guia);
@@ -66,31 +65,40 @@ private TcpConnection tcp;
         tcp.enviar(json);
 
 
-       // Log.e(">>>","%= "+ percentage );
+        // Log.e(">>>","%= "+ percentage );
         if (percentage >= 10) {
-            rotate(-130,-110);
-        } if (percentage >= 20) {
-            rotate(-111,-90);
-        } if (percentage >= 30){
-            rotate(-89,-60);
-        } if (percentage >= 40){
-            rotate(-59,-30);
-        } if (percentage >= 50){
-            rotate(-29,0);
-        } if (percentage >= 60){
-            rotate(0,20);
-        } if (percentage >= 70){
-            rotate(21,40);
-        } if (percentage >= 80){
-            rotate(41,60);
-        } if (percentage > 90) {
-            rotate(60,90);
+            rotate(-130, -110);
+        }
+        if (percentage >= 20) {
+            rotate(-111, -90);
+        }
+        if (percentage >= 30) {
+            rotate(-89, -60);
+        }
+        if (percentage >= 40) {
+            rotate(-59, -30);
+        }
+        if (percentage >= 50) {
+            rotate(-29, 0);
+        }
+        if (percentage >= 60) {
+            rotate(0, 20);
+        }
+        if (percentage >= 70) {
+            rotate(21, 40);
+        }
+        if (percentage >= 80) {
+            rotate(41, 60);
+        }
+        if (percentage > 90) {
+            rotate(60, 90);
         }
 
 
     }
-    public void rotate(int degreesI, int degreesF){
-        RotateAnimation animation= new RotateAnimation(degreesI,
+
+    public void rotate(int degreesI, int degreesF) {
+        RotateAnimation animation = new RotateAnimation(degreesI,
                 degreesF,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f, //Como debe interpretarse pivotXValue
                 RotateAnimation.RELATIVE_TO_SELF, 0.97f);
@@ -101,12 +109,21 @@ private TcpConnection tcp;
     @Override
     public void OnMessage(String msg) {
         runOnUiThread(
-                ()->{
+                () -> {
                     if (msg.equals("perdio")) {
-
+                        recording = false;
+                        meter.stop();
                         Intent i = new Intent(this, Win.class);
+                        i.putExtra("perdio", false);
                         startActivity(i);
-                        Log.e(">>>","cambio");
+                        finish();
+                    }
+                    if (msg.equals("gano")) {
+                        recording = false;
+                        meter.stop();
+                        Intent i = new Intent(this, Win.class);
+                        i.putExtra("perdio", true);
+                        startActivity(i);
                         finish();
                     }
                 }
