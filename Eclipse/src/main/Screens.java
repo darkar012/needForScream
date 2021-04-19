@@ -26,6 +26,11 @@ public class Screens {
 
 	private int seg=0;
 	private boolean timer=false;
+	
+	private int vel=0;
+	private int vel2=0;
+	private boolean velActivo=false;
+	
 	private ArrayList<Session> sessions;
 
 	public Screens(PApplet app) {
@@ -80,6 +85,30 @@ public class Screens {
 		}
 
 	}
+	
+	public void velMax() {
+		
+		int contVel=0;
+		int contVel2=0;
+		
+		if (velActivo) {
+			
+			contVel = sessions.get(0).getAv().getVel()*30+40;
+			contVel2 = sessions.get(1).getAv().getVel()*30+40;
+			
+			if (contVel>vel) {
+				
+				vel=contVel;
+			}
+			
+			if (contVel2>vel) {
+				
+				vel2=contVel2;
+			}
+			
+		}
+		
+	}
 
 	public ArrayList<Session> getSessions() {
 		return sessions;
@@ -122,6 +151,7 @@ public class Screens {
 				
 				app.image(juegoScr, 0, 0);
 				temporizador();
+				velMax();
 				for (int i = 0; i < sessions.size(); i++) {
 					sessions.get(i).getAv().pintar();
 					sessions.get(i).getAv().move();
@@ -146,14 +176,20 @@ public class Screens {
 
 		if (jgGanador==1) {
 			app.image(jugador1win, 118, 76);
-			app.text(seg, 880, 350);
+			app.text(seg, 860, 350);
+			app.text(vel, 860, 392);
+			
 			timer=false;
+			velActivo=false;
 		}
 
 		if(jgGanador==2) {
 			app.image(jugador2win, 118, 76);
-			app.text(seg, 880, 350);
+			app.text(seg, 870, 350);
+			app.text(vel2, 870, 392);
+			
 			timer=false;
+			velActivo=false;
 		}
 
 	}
@@ -225,15 +261,23 @@ public class Screens {
 		switch (generic.type) {
 
 		case "voz": 
-			System.out.println("entro");
-			Voz v = gson.fromJson(msg, Voz.class);
-			if (sessions.get(0).getID() == Id) {
-				sessions.get(0).getAv().setVel(v.getPercentage()/30);
-				//System.out.println(sessions.get(0).getAv().getPosX());
-			} else {
-				sessions.get(1).getAv().setVel(v.getPercentage()/30);
+			
+			if (velActivo) {
+				
+				System.out.println("entro");
+				Voz v = gson.fromJson(msg, Voz.class);
+				if (sessions.get(0).getID() == Id) {
+					sessions.get(0).getAv().setVel(v.getPercentage()/30);
+					//System.out.println(sessions.get(0).getAv().getPosX());
+				} else {
+					sessions.get(1).getAv().setVel(v.getPercentage()/30);
+				}
+				
+				timer = true;
+			
 			}
-			break;	
+			break;
+				
 
 		case "message": 
 			Message m = gson.fromJson(msg, Message.class);
@@ -242,7 +286,8 @@ public class Screens {
 				for (int i = 0; i < sessions.size(); i++) {
 					sessions.get(i).confirmarJuego("iniciar");
 					numScreen = 4;
-					timer = true;
+					
+					velActivo=true;
 				}
 			}
 			break;	
