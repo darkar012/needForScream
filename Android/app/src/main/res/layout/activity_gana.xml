@@ -12,13 +12,13 @@
         android:id="@+id/playBtn3"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="412dp"
         android:background="@drawable/button"
         android:text="Play again"
         app:layout_constraintEnd_toStartOf="@+id/exitBtn2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vel" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/exitBtn2"
@@ -32,35 +32,4 @@
         app:layout_constraintStart_toEndOf="@+id/playBtn3"
         app:layout_constraintTop_toTopOf="@+id/playBtn3" />
 
-    <TextView
-        android:id="@+id/tiempo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="312dp"
-        android:layout_marginEnd="168dp"
-        android:text="0"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/vel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="168dp"
-        android:text="0"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiempo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
