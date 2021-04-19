@@ -171,7 +171,7 @@ public class Screens {
 
 
 	public void pintarGanador() {
-
+System.out.println(jgGanador);
 		if (jgGanador==1) {
 			sessions.get(0).confirmarJuego("gano");
 			app.image(jugador1win, 118, 76);

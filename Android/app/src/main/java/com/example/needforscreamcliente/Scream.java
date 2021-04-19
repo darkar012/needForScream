@@ -66,7 +66,7 @@ private TcpConnection tcp;
         tcp.enviar(json);
 
 
-        Log.e(">>>","%= "+ percentage );
+       // Log.e(">>>","%= "+ percentage );
         if (percentage >= 10) {
             rotate(-130,-110);
         } if (percentage >= 20) {
@@ -100,11 +100,16 @@ private TcpConnection tcp;
 
     @Override
     public void OnMessage(String msg) {
-        Log.e(">**",msg);
-if (msg.equals("perdio")){
-    Intent i = new Intent (this, Win.class);
-    startActivity(i);
+        runOnUiThread(
+                ()->{
+                    if (msg.equals("perdio")) {
 
-}
+                        Intent i = new Intent(this, Win.class);
+                        startActivity(i);
+                        Log.e(">>>","cambio");
+                        finish();
+                    }
+                }
+        );
     }
 }
