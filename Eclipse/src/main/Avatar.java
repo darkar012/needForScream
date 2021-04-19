@@ -13,7 +13,6 @@ public class Avatar extends PApplet{
 	
 	
 	
-	
 	public Avatar(int posX, int posY, int vel, boolean isP1, PApplet app) {
 		
 		this.posX = posX;
