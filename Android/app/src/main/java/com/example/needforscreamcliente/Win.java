@@ -64,6 +64,10 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
     @Override
     public void OnMessage(String msg) {
-        
+        if (msg.equals("reiniciar")) {
+            Intent i = new Intent(this, Counter.class);
+            startActivity(i);
+            finish();
+        }
     }
 }

@@ -265,6 +265,7 @@ System.out.println(jgGanador);
 
 		Generic generic = gson.fromJson(msg, Generic.class);
 
+		System.out.println(generic.type);
 
 		switch (generic.type) {
 
@@ -300,6 +301,9 @@ System.out.println(jgGanador);
 			}
 			
 			if (m.getMsg().equals("reiniciar")) {
+				for (int i = 0; i < sessions.size(); i++) {
+				sessions.get(i).confirmarJuego("reiniciar");
+				}
 				numScreen = 4;
 				hayGanador =false;
 				jgGanador=0;
