@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NeedForScreamCliente">
-        <activity android:name=".Scream"></activity>
+        <activity android:name=".Win" />
+        <activity android:name=".Scream" />
         <activity android:name=".Counter" />
         <activity android:name=".PantallaConexion" />
         <activity android:name=".MainActivity">

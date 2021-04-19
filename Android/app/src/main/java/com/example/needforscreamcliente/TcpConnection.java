@@ -37,7 +37,7 @@ public class TcpConnection extends Thread {
     public void run() {
         try {
 
-            socket = new Socket("192.168.1.7", 5000);
+            socket = new Socket("10.0.2.2", 5000);
 
 
             OutputStream os = socket.getOutputStream();
@@ -50,7 +50,6 @@ public class TcpConnection extends Thread {
             while (true) {
 
                 String mensajeRecibido = breader.readLine();
-                Log.e(">>>", mensajeRecibido);
                 observer.OnMessage(mensajeRecibido);
 
             }

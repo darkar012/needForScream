@@ -33,8 +33,6 @@ public class Counter extends AppCompatActivity {
                             try {
 
                                 Thread.sleep(700);
-                                Log.e("<<<", "grita= "+grita);
-                                Log.e(">>>", "" + counter);
                                 if (counter == 0) {
                                     fondo.setBackgroundResource(R.drawable.cuenta1);
                                 } else if (counter == 1) {

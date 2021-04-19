@@ -66,8 +66,6 @@ public class Screens {
 
 				if (posX>=990) {
 
-
-
 					if (sessions.get(0).getID() == sessions.get(i).getID()) {
 
 						jgGanador=1;
@@ -175,13 +173,17 @@ public class Screens {
 	public void pintarGanador() {
 
 		if (jgGanador==1) {
+			sessions.get(0).confirmarJuego("gano");
 			app.image(jugador1win, 118, 76);
 			app.text(seg, 860, 350);
 			app.text(vel, 860, 392);
 			
 			timer=false;
 			velActivo=false;
-		}
+			sessions.get(0).confirmarJuego(seg+ "," + vel);
+			sessions.get(1).confirmarJuego("perdio");
+			sessions.get(1).confirmarJuego(seg+ "," + vel2);
+		} 
 
 		if(jgGanador==2) {
 			app.image(jugador2win, 118, 76);
@@ -190,6 +192,9 @@ public class Screens {
 			
 			timer=false;
 			velActivo=false;
+			sessions.get(1).confirmarJuego(seg+ "," + vel2);
+			sessions.get(0).confirmarJuego("perdio");
+			sessions.get(0).confirmarJuego(seg+ "," + vel);
 		}
 
 	}

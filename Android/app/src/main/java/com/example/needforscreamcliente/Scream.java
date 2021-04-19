@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.animation.Animation;
@@ -99,6 +100,11 @@ private TcpConnection tcp;
 
     @Override
     public void OnMessage(String msg) {
+        Log.e(">**",msg);
+if (msg.equals("perdio")){
+    Intent i = new Intent (this, Win.class);
+    startActivity(i);
 
+}
     }
 }
