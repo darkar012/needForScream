@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 
 public class Screens {
@@ -12,6 +13,7 @@ public class Screens {
 
 	private PImage inicioScr, instruccionesScr, conexionScr, conexionScr2, conexionScr3, juegoScr;
 	private PImage p1estado, p2estado;
+	private PFont font;
 	private PApplet app;
 
 	private int numScreen=1;
@@ -26,6 +28,9 @@ public class Screens {
 		conexionScr = app.loadImage("../imagenes/conexion1.png");
 		conexionScr2 = app.loadImage("../imagenes/conexion2.png");
 		conexionScr3 = app.loadImage("../imagenes/conexionReady.png");
+		
+		font = app.createFont("NFS font", 32);
+		app.textFont (font);
 
 		juegoScr = app.loadImage("../imagenes/juego.png");
 		sessions = new ArrayList<Session>();
@@ -87,6 +92,8 @@ public class Screens {
 		case 4:
 
 			app.image(juegoScr, 0, 0);
+			
+			app.text("waiting 2nd player", 1000/2, 700/2);
 
 			for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).getAv().pintar();
