@@ -69,14 +69,16 @@ public class Screens {
 					if (sessions.get(0).getID() == sessions.get(i).getID()) {
 
 						jgGanador=1;
-						sessions.get(0).confirmarJuego("gano");
-						sessions.get(1).confirmarJuego("perdio");
+
+						sessions.get(i).confirmarJuego("gano");
+
 						
 					} else {
 
 						jgGanador=2;
-						sessions.get(0).confirmarJuego("perdio");
-						sessions.get(1).confirmarJuego("gano");
+
+						sessions.get(i).confirmarJuego("gano");
+
 					}
 
 					hayGanador=true;
@@ -179,6 +181,8 @@ public class Screens {
 
 		if (jgGanador==1) {
 			
+			sessions.get(1).confirmarJuego("perdio");
+
 			app.image(jugador1win, 118, 76);
 			app.text(seg, 860, 350);
 			app.text(vel, 860, 392);
@@ -191,6 +195,9 @@ public class Screens {
 		} 
 
 		if(jgGanador==2) {
+
+			sessions.get(0).confirmarJuego("perdio");
+
 			
 			
 			app.image(jugador2win, 118, 76);
@@ -322,6 +329,17 @@ public class Screens {
 				vel=0;
 				vel2=0;
 				velActivo=true;
+
+			}
+			
+			if (m.getMsg().equals("finalizar")) {
+				
+				for (int i = 0; i < sessions.size(); i++) {
+					sessions.get(i).confirmarJuego("finalizar");
+					}
+				app.exit();
+				
+
 			}
 			break;	
 		}
