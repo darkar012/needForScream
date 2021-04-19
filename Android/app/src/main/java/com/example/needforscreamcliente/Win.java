@@ -56,7 +56,12 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
                 break;
 
             case R.id.exitBtn2:
-                finish();
+
+                Message m2 = new Message("finalizar");
+                Gson gson2 = new Gson();
+                String str2 = gson2.toJson(m2);
+                tcp.enviar(str2);
+                finishAffinity();
                 break;
         }
 
@@ -68,6 +73,10 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
             Intent i = new Intent(this, Counter.class);
             startActivity(i);
             finish();
+        }
+
+        if (msg.equals("finalizar")){
+            finishAffinity();
         }
     }
 }
