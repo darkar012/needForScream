@@ -275,7 +275,7 @@ public class Screens {
 
 		Generic generic = gson.fromJson(msg, Generic.class);
 
-		System.out.println(generic.type);
+		System.out.println(msg);
 
 		switch (generic.type) {
 
@@ -286,10 +286,10 @@ public class Screens {
 				System.out.println("entro");
 				Voz v = gson.fromJson(msg, Voz.class);
 				if (sessions.get(0).getID() == Id) {
-					sessions.get(0).getAv().setVel(v.getPercentage()/30);
+					sessions.get(0).getAv().setVel(v.getPercentage()/20);
 					//System.out.println(sessions.get(0).getAv().getPosX());
 				} else {
-					sessions.get(1).getAv().setVel(v.getPercentage()/30);
+					sessions.get(1).getAv().setVel(v.getPercentage()/20);
 				}
 				
 				timer = true;
@@ -302,15 +302,29 @@ public class Screens {
 			Message m = gson.fromJson(msg, Message.class);
 
 			if (m.getMsg().equals("iniciar")) {
+				System.out.println("inicio");
 				for (int i = 0; i < sessions.size(); i++) {
 					sessions.get(i).confirmarJuego("iniciar");
 					numScreen = 4;
 					
 					velActivo=true;
+					hayGanador =false;
+					jgGanador=0;
+					
+					for (int j = 0; j < sessions.size(); j++) {
+						sessions.get(j).getAv().setVel(0);
+						sessions.get(j).getAv().setPosX(10);
+					}
+
+					seg=0;
+					timer=false;
+					
+					vel=0;
+					vel2=0;
 				}
 			}
 			
-			if (m.getMsg().equals("reiniciar")) {
+			/*if (m.getMsg().equals("reiniciar")) {
 				for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).confirmarJuego("reiniciar");
 				}
@@ -328,9 +342,9 @@ public class Screens {
 				
 				vel=0;
 				vel2=0;
-				velActivo=true;
+				
 
-			}
+			}*/
 			
 			if (m.getMsg().equals("finalizar")) {
 				

@@ -5,8 +5,10 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -24,7 +26,8 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scream);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.RECORD_AUDIO
@@ -37,7 +40,7 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
         tcp.setObserver(this);
 
         meter = new SoundMeter();
-        meter.start();
+        /*meter.start();
         recording = true;
 
         new Thread(
@@ -54,11 +57,12 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
 
                     }
                 }
-        ).start();
+        ).start();*/
     }
 
     public void amplitudPercentage(double x) {
         percentage = (int) (x * 100) / 32768;
+       
         Voz v = new Voz(percentage);
         Gson gson = new Gson();
         String json = gson.toJson(v);
@@ -128,5 +132,32 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        meter.start();
+        recording = true;
+        new Thread(
+                () -> {
+                    while (recording) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        double amplitude = meter.getAmplitude();
+
+                        amplitudPercentage(amplitude);
+
+                    }
+                }
+        ).start();
+    }
+    protected void onPause() {
+        super.onPause();
+        meter.stop();
+        recording = false;
     }
 }

@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.gson.Gson;
@@ -21,7 +23,8 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gana);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         playBtn=findViewById(R.id.playBtn3);
         exitBtn=findViewById(R.id.exitBtn2);
         exitLayout=findViewById(R.id.exitLayout);
@@ -45,7 +48,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
         switch (v.getId()) {
             case R.id.playBtn3:
-                Message m = new Message("reiniciar");
+                Message m = new Message("iniciar");
                 Gson gson = new Gson();
                 String str = gson.toJson(m);
                 tcp.enviar(str);
@@ -69,7 +72,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
     @Override
     public void OnMessage(String msg) {
-        if (msg.equals("reiniciar")) {
+        if (msg.equals("iniciar")) {
             Intent i = new Intent(this, Counter.class);
             startActivity(i);
             finish();
