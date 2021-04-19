@@ -174,27 +174,30 @@ public class Screens {
 System.out.println(jgGanador);
 		if (jgGanador==1) {
 			sessions.get(0).confirmarJuego("gano");
+			sessions.get(1).confirmarJuego("perdio");
 			app.image(jugador1win, 118, 76);
 			app.text(seg, 860, 350);
 			app.text(vel, 860, 392);
 			
 			timer=false;
 			velActivo=false;
-			sessions.get(0).confirmarJuego(seg+ "," + vel);
-			sessions.get(1).confirmarJuego("perdio");
-			sessions.get(1).confirmarJuego(seg+ "," + vel2);
+			
+			
+			
 		} 
 
 		if(jgGanador==2) {
+			sessions.get(0).confirmarJuego("perdio");
+			sessions.get(1).confirmarJuego("gano");
+			
 			app.image(jugador2win, 118, 76);
 			app.text(seg, 870, 350);
 			app.text(vel2, 870, 392);
 			
 			timer=false;
 			velActivo=false;
-			sessions.get(1).confirmarJuego(seg+ "," + vel2);
-			sessions.get(0).confirmarJuego("perdio");
-			sessions.get(0).confirmarJuego(seg+ "," + vel);
+			
+			
 		}
 
 	}
