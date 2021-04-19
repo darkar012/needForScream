@@ -26,7 +26,7 @@ public class Screens {
 
 	private int seg=0;
 	private boolean timer=false;
-
+	
 	private ArrayList<Session> sessions;
 
 	public Screens(PApplet app) {
@@ -165,13 +165,13 @@ public class Screens {
 
 		if (jgGanador==1) {
 			app.image(jugador1win, 118, 76);
-			app.text(seg, 886, 350);
+			app.text(seg, 880, 350);
 			timer=false;
 		}
 
 		if(jgGanador==2) {
 			app.image(jugador2win, 118, 76);
-			app.text(seg, 886, 350);
+			app.text(seg, 880, 350);
 			timer=false;
 		}
 
