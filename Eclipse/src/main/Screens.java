@@ -24,6 +24,9 @@ public class Screens {
 	private boolean hayGanador=false;
 	private int jgGanador=0;
 
+	private int seg=0;
+	private boolean timer=false;
+
 	private ArrayList<Session> sessions;
 
 	public Screens(PApplet app) {
@@ -133,21 +136,18 @@ public class Screens {
 
 		case 4:
 
+			timer=true;
 			app.image(juegoScr, 0, 0);
 
 			ganar();
 
+			temporizador();
+			pintarGanador();
+
+
 			for (int i = 0; i < sessions.size(); i++) {
 				sessions.get(i).getAv().pintar();
 				sessions.get(i).getAv().move();
-			}
-
-			if (jgGanador==1) {
-				app.image(jugador1win, 118, 76);
-			}
-
-			if(jgGanador==2) {
-				app.image(jugador2win, 118, 76);
 			}
 
 			break; 
@@ -156,6 +156,39 @@ public class Screens {
 			break;
 		}
 
+	}
+
+
+
+
+	public void pintarGanador() {
+
+		if (jgGanador==1) {
+			app.image(jugador1win, 118, 76);
+			app.text(seg, 886, 350);
+			timer=false;
+		}
+
+		if(jgGanador==2) {
+			app.image(jugador2win, 118, 76);
+			app.text(seg, 886, 350);
+			timer=false;
+		}
+
+	}
+
+	public void temporizador() {
+
+		app.text("TIME: ",550,36);
+		app.text(seg,550+150,36);
+
+		if (timer) {
+
+			if (app.frameCount % 60 == 0) {
+				seg += 1;
+			}
+
+		}
 	}
 
 	public int getConectados() {
@@ -204,9 +237,10 @@ public class Screens {
 	public void OnMessage(Session s, String msg) {
 		Gson gson = new Gson();
 		String Id = s.getID();
+
 		Generic generic = gson.fromJson(msg, Generic.class);
-		
-		
+
+
 		switch (generic.type) {
 
 		case "voz": 
@@ -222,16 +256,16 @@ public class Screens {
 
 		case "message": 
 			Message m = gson.fromJson(msg, Message.class);
-			
+
 			if (m.getMsg().equals("iniciar")) {
 				for (int i = 0; i < sessions.size(); i++) {
 					sessions.get(i).confirmarJuego("iniciar");
 				}
 			}
 			break;	
-			
 		}
-
-
 	}
+
+
 }
+
