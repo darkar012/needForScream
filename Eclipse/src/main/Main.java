@@ -43,9 +43,9 @@ private boolean todosConectados = true;
 
 	@Override
 	public void OnMessage(Session s, String msg) {
-		System.out.println("mensaje recibido de " + s.getID() + ": "+ msg);
+		//System.out.println("mensaje recibido de " + s.getID() + ": "+ msg);
 		
-gameScreen.OnMessage(s, msg);
+		gameScreen.OnMessage(s, msg);
 	}
 	
 	public void connect() {
