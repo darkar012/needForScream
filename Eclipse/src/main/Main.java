@@ -12,7 +12,7 @@ public class Main extends PApplet implements OnMessageListener{
 	private int screen = 1;
 	private Screens gameScreen;
 	private PApplet app;
-private boolean todosConectados = true;
+	private boolean todosConectados = true;
 	
 	public static void main(String[] args) {
 		PApplet.main("main.Main");
