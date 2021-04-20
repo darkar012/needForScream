@@ -8,7 +8,7 @@ public class Avatar extends PApplet{
 	private int posX, posY, vel;
 	private PImage car1;
 	private PImage car2;
-	private boolean isP1;
+	private boolean isP1; //Booleana para saber si el jugador es el 1 o el 2
 	private PApplet app;
 	
 	
@@ -25,6 +25,7 @@ public class Avatar extends PApplet{
 		
 	}
 	
+	//Método para pintar cada carro.
 	public void pintar() {
 		
 		if (isP1) {
@@ -34,6 +35,7 @@ public class Avatar extends PApplet{
 		}
 	}
 	
+	//Método para mover cada carro.
 	public void move() {
 		
 		if(posX > 0 && posX+210 < 1200) {

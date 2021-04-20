@@ -23,28 +23,14 @@ public class Session extends Thread{
 	private BufferedWriter writer;
 	private OnMessageListener OML;
 	private Avatar av;
-	//private PApplet app;
-
+	
 	public Session (Socket socket) {
 		this.socket = socket;
-		this.id = UUID.randomUUID().toString();
+		this.id = UUID.randomUUID().toString(); //Crea un ID para identificar cada jugador en la sesión.
 		
 	}
 
-
-
-	public Avatar getAv() {
-		return av;
-	}
-
-
-
-	public void setAv(Avatar av) {
-		this.av = av;
-	}
-
-
-
+	//Hilo para recibir las conexiones de los clientes.
 	public void run() {
 		try {
 			
@@ -56,9 +42,7 @@ public class Session extends Thread{
 
 			while (true) {
 
-				//System.out.println("Esperando mensaje...");
 				String mensajeRecibido = breader.readLine(); 
-				//System.out.println(mensajeRecibido);
 				OML.OnMessage(this, mensajeRecibido);
 				
 			}
@@ -69,26 +53,12 @@ public class Session extends Thread{
 		}
 	}
 
+	//Referencia al observador que llega desde el TCP.
 	public void setObserver(OnMessageListener observer){
 		this.OML = observer;
 	}
 
-	public String getID() {
-		return this.id;
-	}
-
-
-
-	public PApplet getApp() {
-		return app;
-	}
-
-
-
-	public void setApp(PApplet app) {
-		this.app = app;
-	}
-
+	//Método para enviar mensajes desde la sesión.
 	public void confirmarJuego(String msg) {
 		 new Thread(
 	                () -> {
@@ -105,11 +75,29 @@ public class Session extends Thread{
 		
 	}
 	
-	
-
-
-
+	//Método para crear carros con respecto a cada jugador.
 	public void createAvatar(boolean b) {
 		av = new Avatar(10, 550, 0, b, app);
+	}
+	
+	public Avatar getAv() {
+		return av;
+	}
+
+	public void setAv(Avatar av) {
+		this.av = av;
+	}
+	
+
+	public String getID() {
+		return this.id;
+	}
+
+	public PApplet getApp() {
+		return app;
+	}
+
+	public void setApp(PApplet app) {
+		this.app = app;
 	}
 }

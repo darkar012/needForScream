@@ -1,5 +1,6 @@
 package main;
 
+//Clase que recibe los mensajes desde el cliente.
 public class Message {
 	
 	private String type = "message";

@@ -1,5 +1,6 @@
 package main;
 
+//Clase que recibe la intensidad de los micrófonos.
 public class Voz {
 	
 	private String type = "voz";

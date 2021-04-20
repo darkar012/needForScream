@@ -23,18 +23,19 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gana);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        playBtn=findViewById(R.id.playBtn3);
-        exitBtn=findViewById(R.id.exitBtn2);
-        exitLayout=findViewById(R.id.exitLayout);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //Mantiene la pantalla del celular activa. No se suspende
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Mantiene la posición en vertical en los dispositivos
+        playBtn = findViewById(R.id.playBtn3);
+        exitBtn = findViewById(R.id.exitBtn2);
+        exitLayout = findViewById(R.id.exitLayout);
 
-        tcp = TcpConnection.getInstance();
-        tcp.setObserver(this);
+        tcp = TcpConnection.getInstance(); //Instancia de la clase TCP
+        tcp.setObserver(this); //Convertir la actividad en observador
 
-        perdio= getIntent().getBooleanExtra("perdio",true);
+        perdio = getIntent().getBooleanExtra("perdio", true);
 
-        if (!perdio){
+        //Activa la pantalla de perdedor en la actividad. La pantalla de ganar está por defecto.
+        if (!perdio) {
             exitLayout.setBackgroundResource(R.drawable.pierde);
         }
 
@@ -43,10 +44,13 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
     }
 
+    //Método para los botones.
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
+
+            //Envía un mensaje al servidor y el otro jugador para volver a reiniciar el juego.
             case R.id.playBtn3:
                 Message m = new Message("iniciar");
                 Gson gson = new Gson();
@@ -58,6 +62,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
                 finish();
                 break;
 
+            //Envía un mensaje al servidor y el otro jugador para cerrar las aplicaciones.
             case R.id.exitBtn2:
 
                 Message m2 = new Message("finalizar");
@@ -70,6 +75,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
 
     }
 
+    //Recibe los mensajes desde el servidor que provenien del otro jugador.
     @Override
     public void OnMessage(String msg) {
         if (msg.equals("iniciar")) {
@@ -78,7 +84,7 @@ public class Win extends AppCompatActivity implements OnMessageListener, View.On
             finish();
         }
 
-        if (msg.equals("finalizar")){
+        if (msg.equals("finalizar")) {
             finishAffinity();
         }
     }

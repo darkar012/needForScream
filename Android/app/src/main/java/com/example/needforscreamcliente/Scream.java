@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 
 public class Scream extends AppCompatActivity implements OnMessageListener {
-    private SoundMeter meter;
+    private SoundMeter meter; //Variable para llamar al medidor de audio del celular.
     private boolean recording = false;
     private int percentage;
     private ImageView guia;
@@ -26,8 +26,8 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scream);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //Mantiene la pantalla del celular activa. No se suspende
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Mantiene la posición en vertical en los dispositivos
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.RECORD_AUDIO
@@ -36,39 +36,24 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
 
         guia = findViewById(R.id.guia);
 
-        tcp = TcpConnection.getInstance();
-        tcp.setObserver(this);
+        tcp = TcpConnection.getInstance(); //Instancia de la clase TCP
+        tcp.setObserver(this); //Convertir la actividad en observador
 
-        meter = new SoundMeter();
-        /*meter.start();
-        recording = true;
-
-        new Thread(
-                () -> {
-                    while (recording) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        double amplitude = meter.getAmplitude();
-
-                        amplitudPercentage(amplitude);
-
-                    }
-                }
-        ).start();*/
+        meter = new SoundMeter(); //Inicializa el medidor
     }
 
+    //Método que normaliza y convierte en porcentaje los valores recibidos por los microfonos del dispositivo.
+    //Luego de esto, son enviados al servidor, donde serán convertidos en velocidad.
     public void amplitudPercentage(double x) {
         percentage = (int) (x * 100) / 32768;
-       
+
         Voz v = new Voz(percentage);
         Gson gson = new Gson();
         String json = gson.toJson(v);
         tcp.enviar(json);
 
 
+        //If que hacen girar la aguja del acelerometro y así se genera la animación.
         // Log.e(">>>","%= "+ percentage );
         if (percentage >= 10) {
             rotate(-130, -110);
@@ -101,22 +86,28 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
 
     }
 
+    //Método para rotar la aguja del acelerómetro.
+    //Toma un punto de pivote del elemento para hacer luego girar la figura.
     public void rotate(int degreesI, int degreesF) {
         RotateAnimation animation = new RotateAnimation(degreesI,
                 degreesF,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f, //Como debe interpretarse pivotXValue
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.97f);
         animation.setDuration(1000);
         guia.startAnimation(animation);
     }
 
+    //Método que recibe mensajes del servidor.
     @Override
     public void OnMessage(String msg) {
         runOnUiThread(
                 () -> {
+
+                    //Cada if es el caso en el que el jugador pierda o gane. El mensaje es recibido desde el servidor
+                    //luego de que este valide el ganador.
                     if (msg.equals("perdio")) {
                         recording = false;
-                        meter.stop();
+                        meter.stop(); //Se detiene el medidor del celular, y por lo tanto, no se recibe audio.
                         Intent i = new Intent(this, Win.class);
                         i.putExtra("perdio", false);
                         startActivity(i);
@@ -124,7 +115,7 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
                     }
                     if (msg.equals("gano")) {
                         recording = false;
-                        meter.stop();
+                        meter.stop(); //Se detiene el medidor del celular, y por lo tanto, no se recibe audio.
                         Intent i = new Intent(this, Win.class);
                         i.putExtra("perdio", true);
                         startActivity(i);
@@ -134,6 +125,7 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
         );
     }
 
+    //Método para reiniciar el medidor del volumen del dispositivo al volver a llamar la pantalla.
     @Override
     protected void onResume() {
         super.onResume();
@@ -147,7 +139,7 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        double amplitude = meter.getAmplitude();
+                        double amplitude = meter.getAmplitude(); //Toma la amplitud del celular y la guarda en la variab;e.
 
                         amplitudPercentage(amplitude);
 
@@ -155,6 +147,8 @@ public class Scream extends AppCompatActivity implements OnMessageListener {
                 }
         ).start();
     }
+
+    //Método para detener el medidor y micrófono del celular.
     protected void onPause() {
         super.onPause();
         meter.stop();
