@@ -13,12 +13,14 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
-
+//Esta clase usa el patrón Singleton para hacer una única instancia 
+//y así poder enviar o recibir mensajes a los clientes.
 public class TcpConnection extends Thread{
 
 	private static TcpConnection unicainstancia;
 	private ServerSocket server;
 
+	//Crea la instancia de la clase e inicia el hilo.
 	public static TcpConnection getInstance() {
 		if (unicainstancia == null) {
 			unicainstancia = new TcpConnection();
@@ -34,13 +36,15 @@ public class TcpConnection extends Thread{
 	private OnMessageListener OML;
     private BufferedWriter writer;
     private Socket socketEnvio;
-	private ArrayList<Session> sessions;
+	private ArrayList<Session> sessions; //Almacena los diferentes clientes o sesiones que se conectan.
 	private int conexiones = 0;
 
+	//Referencia al observador que llega en el TCP.
 	public void setObserver(OnMessageListener observer){
 		this.OML = observer;
 	}
 
+	//Inicia el hilo de la conexión TCP.
 	public void run () {
 
 		try {
@@ -62,7 +66,10 @@ public class TcpConnection extends Thread{
 				System.out.println("Cliente esta conectado");
 				conexiones ++;
 				
+				//Este if confirma que ambos jugadores están conectados al servidor.
 				if (conexiones == 2) {
+					
+					//Envía un mensaje a los clientes para activar los botones de iniciar en cada pantalla.
 					for (int i = 0; i < sessions.size(); i++) {
 						sessions.get(i).confirmarJuego("conectados");
 					}

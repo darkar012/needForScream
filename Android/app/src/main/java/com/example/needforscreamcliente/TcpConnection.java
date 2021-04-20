@@ -12,9 +12,12 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+//Esta clase usa el patrón Singleton para hacer una única instancia
+//y así poder enviar o recibir mensajes del servidor.
 public class TcpConnection extends Thread {
     private static TcpConnection unicainstancia;
 
+    //Crea la instancia de la clase e inicia el hilo.
     public static TcpConnection getInstance() {
         if (unicainstancia == null) {
             unicainstancia = new TcpConnection();
@@ -30,14 +33,16 @@ public class TcpConnection extends Thread {
     private BufferedWriter writer;
     private OnMessageListener observer;
 
+    //Referencia al observador que llega en el TCP.
     public void setObserver(OnMessageListener observer) {
         this.observer = observer;
     }
 
+    //Inicia el hilo de la conexión TCP.
     public void run() {
         try {
 
-            socket = new Socket("192.168.1.52", 5000);
+            socket = new Socket("192.168.1.7", 5000);
 
 
             OutputStream os = socket.getOutputStream();
@@ -47,6 +52,7 @@ public class TcpConnection extends Thread {
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader breader = new BufferedReader(isr);
 
+            //Lee siempre los mensajes que llegan
             while (true) {
 
                 String mensajeRecibido = breader.readLine();
@@ -60,7 +66,8 @@ public class TcpConnection extends Thread {
         }
     }
 
-        public void enviar(String msg) {
+    //Método para enviar mensajes al servidor.
+    public void enviar(String msg) {
         new Thread(
                 () -> {
                     try {
