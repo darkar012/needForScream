@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
+//Clase de la animación del conteo para jugar.
 public class Counter extends AppCompatActivity {
     private ConstraintLayout fondo;
     private int counter = 0;
@@ -24,6 +25,7 @@ public class Counter extends AppCompatActivity {
 
     }
 
+    //Método para hacer la animación de conteo para empezar a jugar.
     public void loop() {
         new Thread(
                 () -> {
@@ -48,8 +50,6 @@ public class Counter extends AppCompatActivity {
                                 }
 
 
-
-
                                 counter++;
 
                             } catch (InterruptedException e) {
@@ -58,7 +58,7 @@ public class Counter extends AppCompatActivity {
                         }
 
                     }
-                    if (grita){
+                    if (grita) {
                         Intent j = new Intent(this, Scream.class);
                         startActivity(j);
                         finish();

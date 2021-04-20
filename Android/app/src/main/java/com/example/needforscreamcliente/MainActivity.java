@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         exit.setOnClickListener(this);
     }
 
+    //Método para cambiar a la siguiente actividad o cerrar el programa.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

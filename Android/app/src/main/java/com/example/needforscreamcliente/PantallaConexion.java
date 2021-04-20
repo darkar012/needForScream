@@ -25,15 +25,15 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_conexion);
         fondo = findViewById(R.id.fondo);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Mantiene la posición en vertical en los dispositivos
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //Mantiene la pantalla del celular activa. No se suspende
 
-        if (conectado==false) {
+        if (conectado == false) {
             loop();
         }
 
-        tcp = TcpConnection.getInstance();
-        tcp.setObserver(this);
+        tcp = TcpConnection.getInstance(); //Instancia de la clase TCP
+        tcp.setObserver(this); //Convertir la actividad en observador
 
         play2 = findViewById(R.id.playBtn2);
         back = findViewById(R.id.backBtn);
@@ -44,6 +44,7 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
         back.setOnClickListener(this);
     }
 
+    //Método que hace la animación de conectarse en la actividad.
     public void loop() {
         new Thread(
                 () -> {
@@ -62,11 +63,11 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
                                 }
                                 counter++;
                                 //Log.e(">>>", "" + counter);
-    if (conectado == true){
-    fondo.setBackgroundResource(R.drawable.conectado);
-    return;
+                                if (conectado == true) {
+                                    fondo.setBackgroundResource(R.drawable.conectado);
+                                    return;
 
-}
+                                }
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -77,15 +78,20 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
 
     }
 
+    //Método que recibe mensajes del servidor.
     @Override
     public void OnMessage(String msg) {
         runOnUiThread(
-                ()->{
+                () -> {
+
+                    //Verifica que ambos jugadores esten conectados.
                     if (msg.equals("conectados")) {
                         play2.setEnabled(true);
                         conectado = true;
 
                     }
+
+                    //Recibe el mensaje de iniciar la partida.
                     if (msg.equals("iniciar")) {
                         Intent i = new Intent(this, Counter.class);
                         startActivity(i);
@@ -99,6 +105,8 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            //Envia el mensaje de iniciar al servidor y al jugador. Luego cambia a la siguiente actividad
             case R.id.playBtn2:
                 Message m = new Message("iniciar");
                 Gson gson = new Gson();
@@ -109,7 +117,10 @@ public class PantallaConexion extends AppCompatActivity implements OnMessageList
                 startActivity(i);
                 finish();
                 break;
+
+            //Cerrar la aplicación.
             case R.id.backBtn:
+
                 finish();
                 break;
         }
