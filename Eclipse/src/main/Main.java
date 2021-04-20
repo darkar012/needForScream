@@ -9,7 +9,6 @@ public class Main extends PApplet implements OnMessageListener{
 
 	private TcpConnection tcp;
 	private String urlImage;
-	private int screen = 1;
 	private Screens gameScreen;
 	private PApplet app;
 	private boolean todosConectados = true;

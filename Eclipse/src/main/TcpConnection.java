@@ -32,8 +32,6 @@ public class TcpConnection extends Thread{
 
 	String recordatorio;
 	private OnMessageListener OML;
-    private BufferedWriter writer;
-    private Socket socketEnvio;
 	private ArrayList<Session> sessions;
 	private int conexiones = 0;
 
